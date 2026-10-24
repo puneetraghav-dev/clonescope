@@ -1,0 +1,27 @@
+# Rebuilds the app and publishes it to the gh-pages branch on every push to main.
+# GitHub Pages then serves it at https://<user>.github.io/<repo>/
+# (one-time setting: Settings -> Pages -> Deploy from a branch -> gh-pages / root)
+name: Publish website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+      - run: npm run site
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          force_orphan: true

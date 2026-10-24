@@ -1,0 +1,133 @@
+<!--HEAD-->
+<title>CloneScope</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="CloneScope finds copied code in programming assignments, even when it has been disguised. Python, Java, C and C++; runs entirely in your browser.">
+<meta name="author" content="{{AUTHOR}}">
+<meta name="theme-color" content="#0b6874">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CloneScope · AI code plagiarism checker">
+<meta property="og:description" content="Finds copied code in programming assignments, even after renaming, reordering, loop rewrites and padding. Runs in your browser.">
+<meta property="og:url" content="{{SITE}}">
+<meta property="og:image" content="{{SITE}}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b6874'/%3E%3Crect x='5' y='8' width='12' height='16' rx='2' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Crect x='15' y='8' width='12' height='16' rx='2' fill='none' stroke='%23ffd84d' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>{{STYLE}}</style>
+<!--/HEAD-->
+<header class="nav" id="top">
+  <div class="nav-in">
+    <a class="brand" href="#analyze" data-goto="analyze" aria-label="CloneScope home">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="3" y="6" width="15" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="14" y="6" width="15" height="20" rx="2.5" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <path d="M7 12h7M7 16h5M7 20h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M18 12h7M18 16h5M18 20h7" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <b>CloneScope</b>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#analyze" data-goto="analyze">Analyze</a>
+      <a href="#how" data-goto="how">How it works</a>
+      <a href="#results" data-goto="results">Results</a>
+      <a href="#project" data-goto="project">Project</a>
+      <a class="gh" href="{{REPO}}" target="_blank" rel="noopener" aria-label="Source code on GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><span>Source code</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="intake" id="analyze" aria-labelledby="intro-title">
+    <div class="intake-copy">
+      <p class="eyebrow">Plagiarism checker for programming labs</p>
+      <h1 id="intro-title">See who copied whose code, even after it was disguised.</h1>
+      <p class="lede">Upload a whole class's submissions. CloneScope compares every pair of students and points out shared code that survives renamed variables, reordered functions, rewritten loops and padding.</p>
+      <ul class="facts" id="facts">
+        <li><b>4</b><span>languages: Python, Java, C, C++</span></li>
+        <li><b>6</b><span>disguise levels recognised (L1–L6)</span></li>
+        <li id="fact-stress" hidden><b></b><span>of heavily disguised copies caught</span></li>
+        <li class="private"><i aria-hidden="true"></i><span>Runs in your browser; code is never uploaded</span></li>
+      </ul>
+      <div class="drop" id="drop">
+        <strong>Drop a folder, source files or a .zip export here</strong>
+        <span class="small muted">One folder per student (Moodle and Google Classroom downloads work as they are) or one file per student.</span>
+        <div class="row">
+          <label class="btn primary" for="pick-files"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 11V3m0 0L5 6m3-3 3 3M3 13h10"/></svg>Choose files or .zip</label>
+          <input class="visually-hidden" type="file" id="pick-files" multiple accept=".py,.java,.c,.h,.cpp,.cc,.cxx,.hpp,.zip">
+          <label class="btn" for="pick-folder">Choose a folder</label>
+          <input class="visually-hidden" type="file" id="pick-folder" webkitdirectory multiple>
+        </div>
+      </div>
+    </div>
+    <aside class="options" aria-label="Options">
+      <div class="field">
+        <span class="label">Example classes</span>
+        <div class="chips" id="samples"></div>
+        <small>Fictional students. Each class hides three disguised copies.</small>
+      </div>
+      <div class="field">
+        <label for="pick-starter">Starter code given to students</label>
+        <div class="starter">
+          <label class="btn ghost" for="pick-starter">Add starter code</label>
+          <input class="visually-hidden" type="file" id="pick-starter" multiple accept=".py,.java,.c,.h,.cpp,.cc,.cxx,.hpp">
+          <span class="name" id="starter-name">none</span>
+          <button class="btn ghost" id="starter-clear" hidden>Remove</button>
+        </div>
+        <small>Code you handed out is ignored, so it never counts as copying.</small>
+      </div>
+      <div class="field">
+        <label for="sens">Flag pairs with a suspicion score of at least</label>
+        <div class="range"><input type="range" id="sens" min="30" max="95" step="1" value="50"><output id="sens-out" for="sens">50</output></div>
+        <small>Lower finds more pairs to review; higher shows only the strongest cases.</small>
+      </div>
+    </aside>
+  </section>
+
+  <div class="dataset" id="dataset" aria-live="polite"></div>
+  <div class="progress" id="progress" hidden><span class="small" id="progress-text">Working…</span><div class="bar"><i id="progress-bar"></i></div></div>
+
+  <section class="results" id="results" aria-label="Results">
+    <div class="summary" id="summary"></div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Result views">
+      <button class="tab" role="tab" id="tab-pairs" aria-controls="view-pairs" aria-selected="true" data-view="pairs">Flagged pairs<span class="count" id="count-pairs">0</span></button>
+      <button class="tab" role="tab" id="tab-groups" aria-controls="view-groups" aria-selected="false" data-view="groups">Copy groups<span class="count" id="count-groups">0</span></button>
+      <button class="tab" role="tab" id="tab-matrix" aria-controls="view-matrix" aria-selected="false" data-view="matrix">Similarity matrix</button>
+      <button class="tab" role="tab" id="tab-all" aria-controls="view-all" aria-selected="false" data-view="all">All pairs</button>
+      <button class="tab" role="tab" id="tab-about" aria-controls="view-about" aria-selected="false" data-view="about">How it works</button>
+    </nav>
+    <div class="view" id="view-pairs" role="tabpanel" aria-labelledby="tab-pairs"></div>
+    <div class="view" id="view-groups" role="tabpanel" aria-labelledby="tab-groups" hidden></div>
+    <div class="view" id="view-matrix" role="tabpanel" aria-labelledby="tab-matrix" hidden></div>
+    <div class="view" id="view-all" role="tabpanel" aria-labelledby="tab-all" hidden></div>
+    <div class="view" id="view-about" role="tabpanel" aria-labelledby="tab-about" hidden></div>
+  </section>
+
+  <section class="project" id="project" aria-labelledby="project-title">
+    <div class="project-main">
+      <p class="eyebrow">Final year project</p>
+      <h2 id="project-title">Detecting disguised source-code plagiarism with a Siamese neural network</h2>
+      <p class="abstract" id="abstract"></p>
+      <div class="project-links">
+        <a class="btn primary" href="{{REPO}}" target="_blank" rel="noopener">Source code on GitHub</a>
+        <a class="btn" href="{{REPO}}/blob/main/docs/HOW_IT_WORKS.md" target="_blank" rel="noopener">Technical walkthrough</a>
+        <a class="btn" href="{{REPO}}/blob/main/results/RESULTS.md" target="_blank" rel="noopener">Evaluation results</a>
+      </div>
+    </div>
+    <dl class="project-facts" id="project-facts"></dl>
+  </section>
+
+  <footer class="foot">
+    <span id="copyright">© 2026 CloneScope</span>
+    <span>CloneScope combines token normalization, winnowing, greedy string tiling, a Siamese neural encoder and shared-text evidence into one score.</span>
+    <span>A high score is evidence for a person to review, not a verdict.</span>
+  </footer>
+</div>
+
+<div class="compare" id="compare" role="dialog" aria-modal="true" aria-labelledby="cmp-title" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script type="application/json" id="cs-data">{{DATA}}</script>
+<script>{{SCRIPT}}</script>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; background: #0f1d24; color: #e8eff2; font-family: "IBM Plex Sans", sans-serif; overflow: hidden; }
+  .card { position: relative; width: 1200px; height: 630px; padding: 64px 70px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 46px; }
+  .card::after { content: ""; position: absolute; inset: auto 0 0 0; height: 8px; background: linear-gradient(90deg, #4fb5c1, #ffd84d 55%, #ff6b70); }
+  .brand { display: flex; align-items: center; gap: 14px; font: 700 34px "IBM Plex Sans Condensed", sans-serif; letter-spacing: .01em; }
+  h1 { font: 700 60px/1.06 "IBM Plex Sans Condensed", sans-serif; margin-top: 46px; letter-spacing: -.005em; }
+  p { font-size: 24px; line-height: 1.45; color: #a9bac3; margin-top: 22px; }
+  .url { position: absolute; left: 70px; bottom: 40px; font: 500 21px "IBM Plex Mono", monospace; color: #6cc7d2; }
+  .panes { display: grid; gap: 16px; align-content: center; }
+  .pane { background: #15262f; border: 1px solid #27404b; border-radius: 14px; padding: 16px 18px; font: 17px/1.7 "IBM Plex Mono", monospace; color: #c9d6dc; }
+  .pane b { display: block; font: 600 15px "IBM Plex Sans", sans-serif; color: #8fa5af; margin-bottom: 6px; letter-spacing: .02em; }
+  mark { color: inherit; border-radius: 3px; padding: 0 2px; }
+  .y { background: rgba(255, 216, 77, .32); } .p { background: rgba(255, 92, 168, .30); } .g { background: rgba(46, 204, 113, .30); }
+  .kw { color: #c4a2f0; } .fn { color: #6cc7d2; }
+  .stamp { justify-self: end; font: 700 17px "IBM Plex Sans Condensed", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #ff6b70; border: 2px solid #ff6b70; border-radius: 6px; padding: 8px 14px; background: rgba(255, 107, 112, .08); }
+</style></head>
+<body><div class="card">
+  <div>
+    <div class="brand">
+      <svg width="46" height="46" viewBox="0 0 32 32"><rect x="3" y="6" width="15" height="20" rx="2.5" fill="none" stroke="#e8eff2" stroke-width="2"/><rect x="14" y="6" width="15" height="20" rx="2.5" fill="none" stroke="#4fb5c1" stroke-width="2"/><path d="M7 12h7M7 16h5M7 20h7" stroke="#e8eff2" stroke-width="1.6" stroke-linecap="round"/><path d="M18 12h7M18 16h5M18 20h7" stroke="#4fb5c1" stroke-width="1.6" stroke-linecap="round"/></svg>
+      CloneScope
+    </div>
+    <h1>See who copied whose code, even after it was disguised.</h1>
+    <p>AI plagiarism checker for Python, Java, C and C++ programming labs. Runs entirely in your browser.</p>
+  </div>
+  <div class="panes">
+    <div class="pane"><b>Diya Patel · marks.py</b>
+      <mark class="y"><span class="kw">for</span> score <span class="kw">in</span> marks:</mark><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<mark class="y">total += score</mark><br>
+      <mark class="p">avg = total / <span class="fn">len</span>(marks)</mark><br>
+      <mark class="g"><span class="fn">print</span>(<span style="color:#7fd29e">"Topper:"</span>, best)</mark>
+    </div>
+    <div class="pane"><b>Ishita Das · marks.py</b>
+      i = 0<br>
+      <mark class="y"><span class="kw">while</span> i &lt; <span class="fn">len</span>(arr):</mark><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<mark class="y">acc = acc + arr[i]</mark>; i += 1<br>
+      <mark class="p">q = acc / <span class="fn">len</span>(arr)</mark><br>
+      <mark class="g"><span class="fn">print</span>(<span style="color:#7fd29e">"Topper:"</span>, val)</mark>
+    </div>
+    <span class="stamp">Very likely copied · 97</span>
+  </div>
+  <span class="url">puneetraghav-dev.github.io/clonescope</span>
+</div></body></html>

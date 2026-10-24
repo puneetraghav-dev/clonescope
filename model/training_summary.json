@@ -1,0 +1,32 @@
+{
+ "originals": 9823,
+ "per_language": {
+  "Java": 2720,
+  "C": 1841,
+  "C++": 1991,
+  "Python": 3271
+ },
+ "splits": {
+  "train": 7899,
+  "val": 938,
+  "test": 986
+ },
+ "variants": 78584,
+ "hard_pairs": 2069,
+ "parameters": 169792,
+ "epochs": 20,
+ "best_epoch": 12,
+ "train_minutes": 30.4,
+ "val": {
+  "recall@1": 0.9994646680942184,
+  "mrr": 0.9997323340471093,
+  "auc_hard": 0.9999626164870264,
+  "auc_random": 0.9999972495478525,
+  "n_pos": 3736,
+  "n_hard": 179,
+  "pos_mean": 0.9795061609123452,
+  "hard_mean": 0.27349851208650533
+ },
+ "languages": "Python, Java, C, C++",
+ "obfuscator_check": "100.0%"
+}

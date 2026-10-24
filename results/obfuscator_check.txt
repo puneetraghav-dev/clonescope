@@ -1,0 +1,111 @@
+language operation                applied  same-output  different
+c        LEVEL 1                       25           25          0
+c        LEVEL 2                       25           25          0
+c        LEVEL 3                       25           25          0
+c        LEVEL 4                       25           25          0
+c        LEVEL 5                       25           25          0
+c        LEVEL 6                       25           25          0
+c        add_comments                  25           25          0
+c        blank_lines                   25           25          0
+c        brace_style                   25           25          0
+c        change_literals               14           14          0
+c        comparison_flip               23           23          0
+c        compound_assign               22           22          0
+c        dead_code                     25           25          0
+c        flip_if_else                  21           21          0
+c        for_to_while                  24           24          0
+c        increment_style               25           25          0
+c        merge_decl                    25           25          0
+c        redundant_parens              25           25          0
+c        reindent                      25           25          0
+c        remove_comments               25           25          0
+c        rename                        25           25          0
+c        reorder_functions             25           25          0
+c        reorder_statements            17           17          0
+c        rewrite_comments              25           25          0
+c        spacing                       13           13          0
+c        split_decl                    25           25          0
+c        split_init                    24           24          0
+c        while_to_for                  17           17          0
+cpp      LEVEL 1                       25           25          0
+cpp      LEVEL 2                       25           25          0
+cpp      LEVEL 3                       25           25          0
+cpp      LEVEL 4                       25           25          0
+cpp      LEVEL 5                       25           25          0
+cpp      LEVEL 6                       25           25          0
+cpp      add_comments                  25           25          0
+cpp      blank_lines                   25           25          0
+cpp      brace_style                   25           25          0
+cpp      comparison_flip               21           21          0
+cpp      compound_assign               24           24          0
+cpp      dead_code                     25           25          0
+cpp      flip_if_else                  17           17          0
+cpp      for_to_while                  17           17          0
+cpp      increment_style               23           23          0
+cpp      redundant_parens              25           25          0
+cpp      reindent                      25           25          0
+cpp      remove_comments               25           25          0
+cpp      rename                        25           25          0
+cpp      reorder_functions             24           24          0
+cpp      rewrite_comments              25           25          0
+cpp      spacing                       13           13          0
+cpp      split_decl                    25           25          0
+cpp      split_init                    15           15          0
+cpp      type_change                   13           13          0
+java     LEVEL 1                       25           25          0
+java     LEVEL 2                       25           25          0
+java     LEVEL 3                       25           25          0
+java     LEVEL 4                       25           25          0
+java     LEVEL 5                       25           25          0
+java     LEVEL 6                       25           25          0
+java     add_comments                  25           25          0
+java     blank_lines                   25           25          0
+java     brace_style                   25           25          0
+java     change_literals               11           11          0
+java     comparison_flip               23           23          0
+java     compound_assign               23           23          0
+java     dead_code                     25           25          0
+java     flip_if_else                  21           21          0
+java     for_to_while                  24           24          0
+java     increment_style               25           25          0
+java     redundant_parens              25           25          0
+java     reindent                      25           25          0
+java     remove_comments               25           25          0
+java     rename                        25           25          0
+java     reorder_functions             25           25          0
+java     rewrite_comments              25           25          0
+java     spacing                       13           13          0
+java     split_decl                    25           25          0
+java     split_init                    22           22          0
+python   LEVEL 1                       25           25          0
+python   LEVEL 2                       25           25          0
+python   LEVEL 3                       25           25          0
+python   LEVEL 4                       25           25          0
+python   LEVEL 5                       25           25          0
+python   LEVEL 6                       25           25          0
+python   add_comments                  25           25          0
+python   blank_lines                   25           25          0
+python   change_literals               11           11          0
+python   comparison_flip               24           24          0
+python   compound_assign               25           25          0
+python   comprehension_to_loop         25           25          0
+python   dead_code                     25           25          0
+python   extract_temp                  10           10          0
+python   flip_if_else                  21           21          0
+python   for_range_to_while            21           21          0
+python   foreach_to_index              23           23          0
+python   index_to_foreach              25           25          0
+python   loop_to_comprehension         25           25          0
+python   redundant_parens              25           25          0
+python   reindent                      25           25          0
+python   remove_comments               25           25          0
+python   rename                        25           25          0
+python   reorder_functions             25           25          0
+python   reorder_statements            17           17          0
+python   rewrite_comments              25           25          0
+python   spacing                       13           13          0
+python   split_tuple                   25           25          0
+python   while_to_for_range            17           17          0
+
+(for output-changing operations - rewording messages - 'same-output' means: compiles and runs)
+TOTAL 2461/2461 disguised programs compile and run; 2425/2425 from output-preserving operations print identical output (100.0%)

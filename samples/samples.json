@@ -1,0 +1,365 @@
+{
+ "python": {
+  "title": "Lab 4 \u00b7 Marks report",
+  "course": "Python Programming \u00b7 Section B",
+  "language": "python",
+  "submissions": [
+   {
+    "id": "s0",
+    "name": "Aarav Sharma",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "# Lab 4 - Marks report\n# Reads N students and prints a class report.\n\ndef get_grade(m):\n    if m >= 90:\n        return 'A'\n    elif m >= 75:\n        return 'B'\n    elif m >= 60:\n        return 'C'\n    elif m >= 40:\n        return 'D'\n    else:\n        return 'F'\n\n\ndef read_students():\n    n = int(input())\n    names = []\n    marks = []\n    for i in range(n):\n        line = input().split()\n        names.append(line[0])\n        marks.append(int(line[1]))\n    return names, marks\n\n\ndef report(names, marks):\n    total = 0\n    for m in marks:\n        total = total + m\n    avg = total / len(marks)\n    top = 0\n    low = 0\n    for i in range(1, len(marks)):\n        if marks[i] > marks[top]:\n            top = i\n        if marks[i] < marks[low]:\n            low = i\n    print(\"Average:\", round(avg, 2))\n    print(\"Topper:\", names[top], marks[top])\n    print(\"Lowest:\", names[low], marks[low])\n    counts = {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'F': 0}\n    for m in marks:\n        counts[get_grade(m)] += 1\n    for g in counts:\n        print(g, counts[g])\n    print(\"Below average:\")\n    for i in range(len(names)):\n        if marks[i] < avg:\n            print(names[i])\n\n\nnames, marks = read_students()\nreport(names, marks)\n"
+     }
+    ]
+   },
+   {
+    "id": "s1",
+    "name": "Ananya Gupta",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "n = int(input())\ndata = []\ni = 0\nwhile i < n:\n    row = input().strip().split(\" \")\n    data.append([row[0], int(row[1])])\n    i += 1\n\ns = 0\nhi = data[0]\nlo = data[0]\nj = 0\nwhile j < n:\n    s += data[j][1]\n    if data[j][1] > hi[1]:\n        hi = data[j]\n    if data[j][1] < lo[1]:\n        lo = data[j]\n    j += 1\nav = s / n\nprint(\"Average:\", \"%.2f\" % av)\nprint(\"Topper:\", hi[0], hi[1])\nprint(\"Lowest:\", lo[0], lo[1])\n\na = b = c = d = f = 0\nfor rec in data:\n    x = rec[1]\n    if x >= 90:\n        a += 1\n    elif x >= 75:\n        b += 1\n    elif x >= 60:\n        c += 1\n    elif x >= 40:\n        d += 1\n    else:\n        f += 1\nprint(\"A\", a)\nprint(\"B\", b)\nprint(\"C\", c)\nprint(\"D\", d)\nprint(\"F\", f)\nprint(\"Below average:\")\nfor rec in data:\n    if rec[1] < av:\n        print(rec[0])\n"
+     }
+    ]
+   },
+   {
+    "id": "s2",
+    "name": "Arjun Reddy",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "import functools\n\n# functional style solution\n\n\ndef parse(line):\n    name, value = line.split()\n    return name, int(value)\n\n\ndef band(value):\n    limits = {\"A\": 90, \"B\": 75, \"C\": 60, \"D\": 40}\n    for g, lim in limits.items():\n        if value >= lim:\n            return g\n    return \"F\"\n\n\nentries = list(map(parse, [input() for _ in range(int(input()))]))\nvalues = list(map(lambda e: e[1], entries))\ntotal = functools.reduce(lambda acc, v: acc + v, values, 0)\naverage = total / len(values)\nbest = functools.reduce(lambda p, q: p if p[1] >= q[1] else q, entries)\nworst = functools.reduce(lambda p, q: p if p[1] <= q[1] else q, entries)\n\nprint(\"Average: {:.2f}\".format(average))\nprint(\"Topper: {} {}\".format(best[0], best[1]))\nprint(\"Lowest: {} {}\".format(worst[0], worst[1]))\nfor g in \"ABCDF\":\n    print(g, len(list(filter(lambda v: band(v) == g, values))))\nprint(\"Below average:\")\nfor name in map(lambda e: e[0], filter(lambda e: e[1] < average, entries)):\n    print(name)\n"
+     }
+    ]
+   },
+   {
+    "id": "s3",
+    "name": "Diya Patel",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "\"\"\"Marks report using a dictionary of name -> marks.\"\"\"\n\nGRADES = [(90, \"A\"), (75, \"B\"), (60, \"C\"), (40, \"D\")]\n\n\ndef grade_of(score):\n    for cutoff, letter in GRADES:\n        if score >= cutoff:\n            return letter\n    return \"F\"\n\n\ndef summary(book):\n    scores = list(book.values())\n    mean = sum(scores) / len(scores)\n    best = max(book, key=book.get)\n    worst = min(book, key=book.get)\n    return mean, best, worst\n\n\ndef main():\n    count = int(input())\n    book = {}\n    for _ in range(count):\n        name, score = input().split()\n        book[name] = int(score)\n\n    mean, best, worst = summary(book)\n    print(f\"Average: {mean:.2f}\")\n    print(f\"Topper: {best} {book[best]}\")\n    print(f\"Lowest: {worst} {book[worst]}\")\n\n    tally = {letter: 0 for letter in \"ABCDF\"}\n    for score in book.values():\n        tally[grade_of(score)] += 1\n    for letter, k in tally.items():\n        print(letter, k)\n\n    below = [name for name, score in book.items() if score < mean]\n    print(\"Below average:\")\n    for name in sorted(below):\n        print(name)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+     }
+    ]
+   },
+   {
+    "id": "s4",
+    "name": "Ishita Das",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "\"\"\"Marks report using a dictionary of name -> marks.\"\"\"\nn2 = [(90, \"A\"), (75, \"B\"), (60, \"C\"), (40, \"D\")]\ndef check(x):\n  return x\ndef func1(prev):\n  for size1, d in n2:\n    if (prev >= size1):\n      return d\n  return \"F\"\ndef main():\n  counter = int(input())\n  x = {}\n  for _ in range(counter):\n    var2, prev = input().split()\n    x[var2] = int(prev)\n  q, val, tmp2 = work(x)\n  # step 1\n  print(f\"Average: {q:.2f}\")\n  print(f\"Topper: {val} {x[val]}\")\n  for t in range(0):\n    pass\n  print(f\"Lowest: {tmp2} {x[tmp2]}\")\n  beta = {d: 0 for d in \"ABCDF\"}\n  for prev in x.values():\n    # do not change\n    beta[func1(prev)] += 1\n  for d, m in beta.items():\n    print(d, m)\n  aux = []\n  for var2, prev in x.items():\n    if (q > prev):\n      aux.append(var2)\n  print(\"Below average:\")\n  for var2 in sorted(aux):\n    print(var2)\n  hold = 6 * 0\ndef work(x):\n  obj = list(x.values())\n  # update the value\n  k1 = len([])\n  q = sum(obj) / len(obj)\n  val, tmp2 = max(x, key=x.get), min(x, key=x.get)\n  # calculate the result\n  return q, val, tmp2\nif (\"__main__\" == __name__):\n  main()"
+     }
+    ]
+   },
+   {
+    "id": "s5",
+    "name": "Kabir Khan",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "\nptr = [(90, \"A\"), (75, \"B\"), (60, \"C\"), (40, \"D\")]\n\n\ndef perform(e1):\n    for cutoff, letter in ptr:\n        if e1 >= cutoff:\n            return letter\n    return \"F\"\n\n\ndef fn(n1):\n    scores = list(n1.values())\n    h = sum(scores) / len(scores)\n    obj = max(n1, key=n1.get)\n    tail = min(n1, key=n1.get)\n    return h, obj, tail\n\n\ndef main():\n    num_items = int(input())\n    n1 = {}\n    for _ in range(num_items):\n        alpha, e1 = input().split()\n        n1[alpha] = int(e1)\n\n    h, obj, tail = fn(n1)\n    print(f\"Average: {h:.2f}\")\n    print(f\"Topper: {obj} {n1[obj]}\")\n    print(f\"Lowest: {tail} {n1[tail]}\")\n\n    var1 = {letter: 0 for letter in \"ABCDF\"}\n    for e1 in n1.values():\n        var1[perform(e1)] += 1\n    for letter, c in var1.items():\n        # display result\n        print(letter, c)\n\n    val = [alpha for alpha, e1 in n1.items() if e1 < h]\n    print(\"Below average:\")\n    for alpha in sorted(val):\n        print(alpha)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+     }
+    ]
+   },
+   {
+    "id": "s6",
+    "name": "Meera Nair",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "from collections import Counter\nfrom statistics import mean\n\n\ndef letter(m):\n    return \"A\" if m >= 90 else \"B\" if m >= 75 else \"C\" if m >= 60 else \"D\" if m >= 40 else \"F\"\n\n\ndef load():\n    total_students = int(input())\n    records = []\n    for _ in range(total_students):\n        who, mark = input().split()\n        records.append((who, int(mark)))\n    return records\n\n\ndef show(records):\n    marks_only = [m for _, m in records]\n    avg = mean(marks_only)\n    top = max(records, key=lambda r: r[1])\n    bottom = min(records, key=lambda r: r[1])\n    print(f\"Average: {avg:.2f}\")\n    print(\"Topper:\", *top)\n    print(\"Lowest:\", *bottom)\n    grades = Counter(letter(m) for m in marks_only)\n    for g in \"ABCDF\":\n        print(g, grades.get(g, 0))\n    print(\"Below average:\")\n    print(\"\\n\".join(w for w, m in records if m < avg))\n\n\nshow(load())\n"
+     }
+    ]
+   },
+   {
+    "id": "s7",
+    "name": "Rohan Iyer",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "class Student:\n    def __init__(self, name, marks):\n        self.name = name\n        self.marks = marks\n\n    def grade(self):\n        if self.marks >= 90:\n            return \"A\"\n        if self.marks >= 75:\n            return \"B\"\n        if self.marks >= 60:\n            return \"C\"\n        if self.marks >= 40:\n            return \"D\"\n        return \"F\"\n\n\nclass Classroom:\n    def __init__(self):\n        self.students = []\n\n    def add(self, s):\n        self.students.append(s)\n\n    def average(self):\n        return sum(s.marks for s in self.students) / len(self.students)\n\n    def topper(self):\n        best = self.students[0]\n        for s in self.students:\n            if s.marks > best.marks:\n                best = s\n        return best\n\n    def lowest(self):\n        return sorted(self.students, key=lambda s: s.marks)[0]\n\n    def print_report(self):\n        avg = self.average()\n        t, l = self.topper(), self.lowest()\n        print(\"Average: %.2f\" % avg)\n        print(\"Topper: %s %d\" % (t.name, t.marks))\n        print(\"Lowest: %s %d\" % (l.name, l.marks))\n        for g in [\"A\", \"B\", \"C\", \"D\", \"F\"]:\n            print(g, len([s for s in self.students if s.grade() == g]))\n        print(\"Below average:\")\n        for s in self.students:\n            if s.marks < avg:\n                print(s.name)\n\n\nroom = Classroom()\nfor _ in range(int(input())):\n    parts = input().split()\n    room.add(Student(parts[0], int(parts[1])))\nroom.print_report()\n"
+     }
+    ]
+   },
+   {
+    "id": "s8",
+    "name": "Sneha Kulkarni",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "from collections import Counter\nfrom statistics import mean\n\n\ndef process(pos):\n    return \"A\" if pos>=90 else \"B\" if pos>=75 else \"C\" if pos>=60 else \"D\" if pos>=40 else \"F\"\n\n\ndef check():\n    total_students = int(input())\n    ptr = []\n    for _ in range(total_students):\n        size1, num1 = input().split()\n        ptr.append((size1, int(num1)))\n    return ptr\n\n\ndef show(ptr):\n    marks_only = []\n    for _, pos in ptr:\n        marks_only.append(pos)\n    avg = mean(marks_only)\n    prev = max(ptr, key=lambda r: r[1])\n    left = min(ptr, key=lambda r: r[1])\n    print(f\"Average: {avg:.2f}\")\n    print(\"Topper:\", *prev)\n    print(\"Lowest:\", *left)\n    grades = Counter(process(pos) for pos in marks_only)\n    for h in \"ABCDF\":\n        print(h, grades.get(h, 0))\n    print(\"Below average:\")\n    print(\"\\n\".join(head for head, pos in ptr if pos<avg))\n\n\nshow(check())\n"
+     }
+    ]
+   },
+   {
+    "id": "s9",
+    "name": "Vikram Joshi",
+    "files": [
+     {
+      "path": "marks.py",
+      "text": "import bisect\n\nCUTS = [40, 60, 75, 90]\nLETTERS = \"FDCBA\"\n\n\ndef grade(mark):\n    return LETTERS[bisect.bisect_right(CUTS, mark)]\n\n\ndef read_input():\n    size = int(input())\n    pairs = []\n    for idx in range(size):\n        tokens = input().split()\n        pairs.append((tokens[0], int(tokens[1])))\n    return pairs\n\n\ndef stats(pairs):\n    best_i, worst_i, running = 0, 0, 0\n    for idx, (nm, mk) in enumerate(pairs):\n        running += mk\n        if mk > pairs[best_i][1]:\n            best_i = idx\n        if mk < pairs[worst_i][1]:\n            worst_i = idx\n    return running / len(pairs), pairs[best_i], pairs[worst_i]\n\n\npairs = read_input()\naverage, best, worst = stats(pairs)\nprint(\"Average: \" + str(round(average, 2)))\nprint(\"Topper: \" + best[0] + \" \" + str(best[1]))\nprint(\"Lowest: \" + worst[0] + \" \" + str(worst[1]))\ncounts = [0] * 5\nfor nm, mk in pairs:\n    counts[LETTERS.index(grade(mk))] += 1\nfor pos in range(4, -1, -1):\n    print(LETTERS[pos], counts[pos])\nprint(\"Below average:\")\nfor nm, mk in pairs:\n    if mk < average:\n        print(nm)\n"
+     }
+    ]
+   }
+  ],
+  "truth": [
+   [
+    "Diya Patel",
+    "Ishita Das",
+    "Kabir Khan"
+   ],
+   [
+    "Meera Nair",
+    "Sneha Kulkarni"
+   ]
+  ],
+  "note": "Example data: fictional students. Three submissions are disguised copies."
+ },
+ "java": {
+  "title": "Lab 6 \u00b7 Payroll",
+  "course": "Object Oriented Programming with Java \u00b7 Section A",
+  "language": "java",
+  "submissions": [
+   {
+    "id": "s0",
+    "name": "Aditya Menon",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.ArrayList;\nimport java.util.Scanner;\n\nclass Employee {\n    int id;\n    String name;\n    double basic;\n\n    Employee(int id, String name, double basic) {\n        this.id = id;\n        this.name = name;\n        this.basic = basic;\n    }\n\n    double gross() {\n        double da = 0.5 * basic;\n        double hra = 0.2 * basic;\n        return basic + da + hra;\n    }\n\n    double net() {\n        double pf = 0.12 * basic;\n        return gross() - pf;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        ArrayList<Employee> list = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            int id = sc.nextInt();\n            String name = sc.next();\n            double basic = sc.nextDouble();\n            list.add(new Employee(id, name, basic));\n        }\n        Employee best = null;\n        for (Employee e : list) {\n            System.out.printf(\"%d %s %.2f %.2f%n\", e.id, e.name, e.gross(), e.net());\n            if (best == null || e.net() > best.net()) {\n                best = e;\n            }\n        }\n        System.out.printf(\"Highest: %s %.2f%n\", best.name, best.net());\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s1",
+    "name": "Harsh Agarwal",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    record Emp(int id, String name, double basic) {\n        double gross() { return basic + basic * 0.5 + basic * 0.2; }\n        double net() { return gross() - basic * 0.12; }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        List<Emp> emps = IntStream.range(0, n)\n                .mapToObj(i -> new Emp(sc.nextInt(), sc.next(), sc.nextDouble()))\n                .collect(Collectors.toList());\n        emps.forEach(e -> System.out.printf(\"%d %s %.2f %.2f%n\", e.id(), e.name(), e.gross(), e.net()));\n        emps.stream()\n                .max(Comparator.comparingDouble(Emp::net))\n                .ifPresent(e -> System.out.printf(\"Highest: %s %.2f%n\", e.name(), e.net()));\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s2",
+    "name": "Imran Shaikh",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.ArrayList;\nimport java.util.Scanner;\nclass Data1 {\n    int t;\n    String nxt;\n    double basic;\n    Data1(int t, String nxt, double basic) {\n        this.t=t;\n        this.nxt=nxt;\n        this.basic=basic;\n    }\n    double helper() {\n        double da = (0.5*basic);\n        double curr = 0.2*basic;\n        for (int m = 0; m<0; m++) { }\n        return basic+da+curr;\n    }\n    double solve() {\n        double f = 0.12*basic;\n        return helper()-f;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Scanner var1 = new Scanner(System.in);\n        double hold = 0.0;\n        int n = var1.nextInt();\n        ArrayList<Data1> aux = new ArrayList<>();\n        for (int i = 0; (i<n); i++) {\n            int t = var1.nextInt();\n            String nxt = var1.next();\n            double basic = var1.nextDouble();\n            aux.add(new Data1(t, nxt, basic));\n        }\n        Data1 best = null;\n        for (Data1 low : aux) {\n            System.out.printf(\"%d %s %.2f %.2f%n\", low.t, low.nxt, low.helper(), low.solve());\n            if (null==best||(low.solve()>best.solve())) {\n                best=low;\n            }\n        }\n        System.out.printf(\"Highest: %s %.2f%n\", best.nxt, best.solve());\n        var1.close();\n        if (false) { System.out.print(\"\"); }\n    }\n}"
+     }
+    ]
+   },
+   {
+    "id": "s3",
+    "name": "Kavya Rao",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.ArrayList;\nimport java.util.Scanner;\n\nclass Employee_tmp\n{\n\n  int id_tmp;\n  String name_tmp;\n  double myBasic;\n\n  Employee_tmp(int id_tmp, String name_tmp, double myBasic)\n  {\n    this.id_tmp=id_tmp;\n    this.name_tmp=name_tmp;\n    this.myBasic=myBasic;\n  }\n\n  double myGross()\n  {\n    double myDa = 0.5*myBasic;\n    double hra = 0.2*myBasic;\n    return myBasic+myDa+hra;\n  }\n\n  double myNet()\n  {\n    double myPf = 0.12*myBasic;\n    return myGross()-myPf;\n  }\n}\n\npublic class Main\n{\n  public static void main(String[] args)\n  {\n    Scanner mySc = new Scanner(System.in);\n    int myN = mySc.nextInt();\n    ArrayList<Employee_tmp> list = new ArrayList<>();\n    for (int myI = 0; myI<myN; myI++)\n    {\n      int id_tmp = mySc.nextInt();\n      String name_tmp = mySc.next();\n      /* initialize variables */\n      double myBasic = mySc.nextDouble();\n\n      list.add(new Employee_tmp(id_tmp, name_tmp, myBasic));\n    }\n    Employee_tmp myBest = null;\n    for (Employee_tmp myE : list)\n    {\n      System.out.printf(\"%d %s %.2f %.2f%n\", myE.id_tmp, myE.name_tmp, myE.myGross(), myE.myNet());\n      if (myBest==null||myE.myNet()>myBest.myNet())\n      {\n        myBest=myE;\n      }\n    }\n    // read input from user\n    System.out.printf(\"Highest: %s %.2f%n\", myBest.name_tmp, myBest.myNet());\n    mySc.close();\n  }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s4",
+    "name": "Nisha Fernandes",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.LinkedHashMap;\nimport java.util.Map;\nimport java.util.Scanner;\n\npublic class Main {\n    // values[0] = id, values[1] = basic, values[2] = gross, values[3] = net\n    static Map<String, double[]> payroll = new LinkedHashMap<>();\n\n    static void addEmployee(int id, String name, double basic) {\n        double[] v = new double[4];\n        v[0] = id;\n        v[1] = basic;\n        v[2] = basic + basic / 2 + basic / 5;\n        v[3] = v[2] - basic * 0.12;\n        payroll.put(name, v);\n    }\n\n    static String richest() {\n        String who = null;\n        for (Map.Entry<String, double[]> entry : payroll.entrySet()) {\n            if (who == null || entry.getValue()[3] > payroll.get(who)[3]) {\n                who = entry.getKey();\n            }\n        }\n        return who;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        for (int i = 1; i <= n; i++) {\n            int id = sc.nextInt();\n            String name = sc.next();\n            addEmployee(id, name, sc.nextDouble());\n        }\n        for (String name : payroll.keySet()) {\n            double[] v = payroll.get(name);\n            System.out.printf(\"%d %s %.2f %.2f%n\", (int) v[0], name, v[2], v[3]);\n        }\n        String r = richest();\n        System.out.printf(\"Highest: %s %.2f%n\", r, payroll.get(r)[3]);\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s5",
+    "name": "Pooja Singh",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.Scanner;\n\npublic class Main {\n    static final double DA_RATE = 0.5;\n    static final double HRA_RATE = 0.2;\n    static final double PF_RATE = 0.12;\n\n    static class Payslip {\n        int id;\n        String name;\n        double gross, net;\n\n        Payslip(int id, String name, double basic) {\n            this.id = id;\n            this.name = name;\n            gross = basic * (1 + DA_RATE + HRA_RATE);\n            net = gross - basic * PF_RATE;\n        }\n\n        @Override\n        public String toString() {\n            return id + \" \" + name + \" \" + String.format(\"%.2f %.2f\", gross, net);\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        Payslip[] slips = new Payslip[n];\n        StringBuilder out = new StringBuilder();\n        int maxAt = 0;\n        for (int i = 0; i < slips.length; ++i) {\n            slips[i] = new Payslip(sc.nextInt(), sc.next(), sc.nextDouble());\n            out.append(slips[i]).append('\\n');\n            maxAt = slips[i].net > slips[maxAt].net ? i : maxAt;\n        }\n        out.append(\"Highest: \").append(slips[maxAt].name).append(' ').append(String.format(\"%.2f\", slips[maxAt].net));\n        System.out.println(out);\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s6",
+    "name": "Priya Verma",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.Scanner;\n\npublic class Main {\n    static double computeGross(double basic) {\n        return basic * 1.7;\n    }\n\n    static double computeNet(double basic) {\n        return computeGross(basic) - basic * 0.12;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] ids = new int[n];\n        String[] names = new String[n];\n        double[] basics = new double[n];\n        for (int k = 0; k < n; k++) {\n            ids[k] = sc.nextInt();\n            names[k] = sc.next();\n            basics[k] = sc.nextDouble();\n        }\n        int top = 0;\n        for (int k = 0; k < n; k++) {\n            System.out.println(ids[k] + \" \" + names[k] + \" \" + String.format(\"%.2f\", computeGross(basics[k]))\n                    + \" \" + String.format(\"%.2f\", computeNet(basics[k])));\n            if (computeNet(basics[k]) > computeNet(basics[top])) top = k;\n        }\n        System.out.println(\"Highest: \" + names[top] + \" \" + String.format(\"%.2f\", computeNet(basics[top])));\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s7",
+    "name": "Rahul Chatterjee",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.*;\n\ninterface Payable {\n    double grossPay();\n    double netPay();\n}\n\nabstract class Person {\n    protected final String name;\n    Person(String name) { this.name = name; }\n    String getName() { return name; }\n}\n\nclass Staff extends Person implements Payable {\n    private final int code;\n    private final double basicPay;\n    private static final double DA = 0.50, HRA = 0.20, PF = 0.12;\n\n    Staff(int code, String name, double basicPay) {\n        super(name);\n        this.code = code;\n        this.basicPay = basicPay;\n    }\n\n    public double grossPay() { return basicPay * (1 + DA + HRA); }\n    public double netPay() { return grossPay() - basicPay * PF; }\n    int getCode() { return code; }\n}\n\nclass PayrollService {\n    private final List<Staff> staff = new ArrayList<>();\n\n    void hire(Staff s) { staff.add(s); }\n\n    void printSlips() {\n        for (Staff s : staff) {\n            System.out.println(String.format(\"%d %s %.2f %.2f\", s.getCode(), s.getName(), s.grossPay(), s.netPay()));\n        }\n    }\n\n    Staff highestPaid() {\n        Staff top = staff.get(0);\n        for (Staff s : staff) if (s.netPay() > top.netPay()) top = s;\n        return top;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        PayrollService service = new PayrollService();\n        while (n-- > 0) service.hire(new Staff(sc.nextInt(), sc.next(), sc.nextDouble()));\n        service.printSlips();\n        Staff top = service.highestPaid();\n        System.out.println(String.format(\"Highest: %s %.2f\", top.getName(), top.netPay()));\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s8",
+    "name": "Siddharth Jain",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        String bestName = \"\";\n        double bestNet = -1;\n        int count = 0;\n        while (count < n) {\n            int empId = sc.nextInt();\n            String empName = sc.next();\n            double b = sc.nextDouble();\n            double da = b * 50 / 100;\n            double hra = b * 20 / 100;\n            double pf = b * 12 / 100;\n            double g = b + da + hra;\n            double nt = g - pf;\n            System.out.printf(\"%d %s %.2f %.2f\\n\", empId, empName, g, nt);\n            if (nt > bestNet) {\n                bestNet = nt;\n                bestName = empName;\n            }\n            count++;\n        }\n        System.out.printf(\"Highest: %s %.2f\\n\", bestName, bestNet);\n        sc.close();\n    }\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s9",
+    "name": "Tanvi Deshpande",
+    "files": [
+     {
+      "path": "Main.java",
+      "text": "import java.util.LinkedHashMap;\nimport java.util.Map;\nimport java.util.Scanner;\n\npublic class Main\n{\n   // values[0] = id, values[1] = basic, values[2] = gross, values[3] = net\n   static Map<String, double[]> z = new LinkedHashMap<>();\n\n   static String richest()\n   {\n      String u = null;\n      for (Map.Entry<String, double[]> s1 : z.entrySet())\n\n      {\n         if (u==null||s1.getValue()[3]>z.get(u)[3])\n         {\n            u=s1.getKey();\n         }\n      }\n      return u;\n\n   }\n\n\n   public static void main(String[] args)\n   {\n      Scanner head = new Scanner(System.in);\n      int cnt_n = head.nextInt();\n      int k = 1;\n      while (k<=cnt_n)\n      {\n         int num2 = head.nextInt();\n         String m = head.next();\n         compute(num2, m, head.nextDouble());\n         k++;\n      }\n      /* logic for the problem */\n      for (String m : z.keySet())\n      {\n         // store the answer\n         double[] acc = z.get(m);\n         System.out.printf(\"%d %s %.2f %.2f%n\", (int) acc[0], m, acc[2], acc[3]);\n      }\n      String y = richest();\n\n      System.out.printf(\"Highest: %s %.2f%n\", y, z.get(y)[3]);\n      // process each item\n      head.close();\n\n   }\n\n   static void compute(int num2, String m, double basic)\n   {\n      double[] acc = new double[4];\n      acc[0]=num2;\n      acc[1]=basic;\n      acc[2]=basic+basic/2+basic/5;\n      acc[3]=acc[2]-basic*0.12;\n      z.put(m, acc);\n   }\n}\n"
+     }
+    ]
+   }
+  ],
+  "truth": [
+   [
+    "Aditya Menon",
+    "Imran Shaikh",
+    "Kavya Rao"
+   ],
+   [
+    "Nisha Fernandes",
+    "Tanvi Deshpande"
+   ]
+  ],
+  "note": "Example data: fictional students. Three submissions are disguised copies.",
+  "starter": [
+   {
+    "path": "Main.java",
+    "text": "import java.util.Scanner;\n\n/*\n * Lab 6 - Payroll\n * Read N employees (id name basic) and print one payslip line per employee:\n *   DA = 50% of basic, HRA = 20% of basic, PF = 12% of basic\n *   gross = basic + DA + HRA, net = gross - PF\n * Output: id name gross net   (2 decimals)\n * Finally print the employee with the highest net salary.\n */\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        // TODO: read the employees and print the payslips\n        sc.close();\n    }\n}\n"
+   }
+  ]
+ },
+ "c": {
+  "title": "Lab 2 \u00b7 Array statistics",
+  "course": "Programming in C \u00b7 First year",
+  "language": "c",
+  "submissions": [
+   {
+    "id": "s0",
+    "name": "Divya Krishnan",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n#define MAXN 100\n#define IS_EVEN(x) ((x) % 2 == 0)\n\nint main() {\n    int count, values[MAXN];\n    int idx = 0, acc = 0, top, bottom, runner = 0, gotRunner = 0, evenCount = 0, mirror = 1;\n    scanf(\"%d\", &count);\n    do {\n        scanf(\"%d\", &values[idx]);\n        idx++;\n    } while (idx < count);\n    top = bottom = values[0];\n    idx = 0;\n    do {\n        acc += values[idx];\n        top = values[idx] > top ? values[idx] : top;\n        bottom = values[idx] < bottom ? values[idx] : bottom;\n        evenCount += IS_EVEN(values[idx]) ? 1 : 0;\n        idx++;\n    } while (idx < count);\n    for (idx = 0; idx < count; idx++) {\n        if (values[idx] == top) continue;\n        if (!gotRunner || values[idx] > runner) {\n            runner = values[idx];\n            gotRunner = 1;\n        }\n    }\n    printf(\"Sum: %d\\n\", acc);\n    printf(\"Average: %.2f\\n\", acc * 1.0 / count);\n    printf(\"Max: %d\\n\", top);\n    printf(\"Min: %d\\n\", bottom);\n    gotRunner ? printf(\"Second largest: %d\\n\", runner) : printf(\"Second largest: none\\n\");\n    printf(\"Even: %d Odd: %d\\n\", evenCount, count - evenCount);\n    printf(\"Reversed:\");\n    idx = count;\n    do {\n        idx--;\n        printf(\" %d\", values[idx]);\n    } while (idx > 0);\n    printf(\"\\n\");\n    for (idx = 0; idx < count / 2; idx++)\n        if (values[idx] != values[count - 1 - idx]) mirror = 0;\n    printf(\"Palindrome: %s\\n\", mirror ? \"Yes\" : \"No\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s1",
+    "name": "Farhan Ali",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\nint main(void) {\n\tint z;\n\tint baz;\n\tint total;\n\tint num2;\n\tint small;\n\tint foo;\n\tint c;\n\tint key;\n\tint y;\n\tint var1;\n\tint elements[100];\n\tscanf(\"%d\", &z);\n\tbaz=0;\n\twhile (baz<z) {\n\t\tscanf(\"%d\", &elements[baz]);\n\t\tbaz=baz+1;\n\t}\n\ttotal=0; key=0; y=0;\n\tnum2=elements[0]; small=elements[0];\n\tbaz=0;\n\twhile (baz<z) {\n\t\ttotal=total+elements[baz];\n\t\tif (elements[baz]>num2) num2=elements[baz];\n\t\tif (elements[baz]<small) small=elements[baz];\n\t\tif (elements[baz]%2==0) key=key+1; else y=y+1;\n\t\tbaz=baz+1;\n\t}\n\tc=0; foo=0;\n\tbaz=0;\n\twhile (baz<z) {\n\t\tif (elements[baz]<num2) {\n\t\t\tif (c==0||elements[baz]>foo) { foo=elements[baz]; c=1; }\n\t\t}\n\t\tbaz=baz+1;\n\t}\n\tprintf(\"Sum: %d\\n\", total);\n\tprintf(\"Average: %.2f\\n\", total/(double)z);\n\tprintf(\"Max: %d\\n\", num2);\n\tprintf(\"Min: %d\\n\", small);\n\tif (c==1) printf(\"Second largest: %d\\n\", foo);\n\telse printf(\"Second largest: none\\n\");\n\tprintf(\"Even: %d Odd: %d\\n\", key, y);\n\tprintf(\"Reversed:\");\n\tbaz=z-1;\n\twhile (baz>=0) { printf(\" %d\", elements[baz]); baz=baz-1; }\n\tprintf(\"\\n\");\n\tvar1=1;\n\tbaz=0;\n\twhile (baz<z/2) { if (elements[baz]!=elements[z-1-baz]) var1=0; baz=baz+1; }\n\tif (var1) printf(\"Palindrome: Yes\\n\"); else printf(\"Palindrome: No\\n\");\n\treturn 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s2",
+    "name": "Gaurav Mishra",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n#include <limits.h>\n\nstruct Stats {\n    long sum;\n    int max, min, second, evens;\n};\n\nstruct Stats analyse(const int *a, int n) {\n    struct Stats st = {0, INT_MIN, INT_MAX, INT_MIN, 0};\n    for (int i = 0; i < n; ++i) {\n        int x = a[i];\n        st.sum += x;\n        if (x > st.max) {\n            st.second = st.max;\n            st.max = x;\n        } else if (x < st.max && x > st.second) {\n            st.second = x;\n        }\n        if (x < st.min) st.min = x;\n        if (!(x & 1)) st.evens++;\n    }\n    return st;\n}\n\nint main(void) {\n    int n, a[128];\n    if (scanf(\"%d\", &n) != 1) return 1;\n    for (int i = 0; i < n; ++i) scanf(\"%d\", a + i);\n    struct Stats st = analyse(a, n);\n    printf(\"Sum: %ld\\n\", st.sum);\n    printf(\"Average: %.2f\\n\", (double)st.sum / n);\n    printf(\"Max: %d\\n\", st.max);\n    printf(\"Min: %d\\n\", st.min);\n    if (st.second == INT_MIN) printf(\"Second largest: none\\n\");\n    else printf(\"Second largest: %d\\n\", st.second);\n    printf(\"Even: %d Odd: %d\\n\", st.evens, n - st.evens);\n    fputs(\"Reversed:\", stdout);\n    for (int i = n - 1; i >= 0; --i) printf(\" %d\", a[i]);\n    printf(\"\\n\");\n    int same = 1;\n    for (int i = 0, j = n - 1; i < j; ++i, --j) same = same && a[i] == a[j];\n    printf(\"Palindrome: %s\\n\", same ? \"Yes\" : \"No\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s3",
+    "name": "Karthik Subramanian",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n#include <stdlib.h>\n\nvoid readArray(int *p, int n) {\n    for (int *q = p; q < p + n; q++) scanf(\"%d\", q);\n}\n\nlong total(const int *p, int n) {\n    long t = 0;\n    const int *end = p + n;\n    while (p < end) t += *p++;\n    return t;\n}\n\nvoid extremes(const int *p, int n, int *hi, int *lo) {\n    *hi = *lo = *p;\n    for (const int *q = p + 1; q < p + n; q++) {\n        if (*q > *hi) *hi = *q;\n        if (*q < *lo) *lo = *q;\n    }\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int *data = (int *)malloc(n * sizeof(int));\n    if (data == NULL) return 1;\n    readArray(data, n);\n    int hi, lo;\n    extremes(data, n, &hi, &lo);\n    long t = total(data, n);\n    printf(\"Sum: %ld\\n\", t);\n    printf(\"Average: %.2f\\n\", (double)t / n);\n    printf(\"Max: %d\\nMin: %d\\n\", hi, lo);\n    int *second = NULL;\n    for (int *q = data; q < data + n; q++)\n        if (*q != hi && (second == NULL || *q > *second)) second = q;\n    if (second) printf(\"Second largest: %d\\n\", *second);\n    else puts(\"Second largest: none\");\n    int evens = 0;\n    for (int *q = data; q < data + n; q++) evens += (*q % 2 == 0);\n    printf(\"Even: %d Odd: %d\\n\", evens, n - evens);\n    printf(\"Reversed:\");\n    for (int *q = data + n - 1; q >= data; q--) printf(\" %d\", *q);\n    putchar('\\n');\n    int *l = data, *r = data + n - 1, pal = 1;\n    while (l < r) if (*l++ != *r--) { pal = 0; break; }\n    printf(\"Palindrome: %s\\n\", pal ? \"Yes\" : \"No\");\n    free(data);\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s4",
+    "name": "Lakshmi Pillai",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\nint rsum(int v[], int n) {\n    if (n == 0) return 0;\n    return v[n - 1] + rsum(v, n - 1);\n}\n\nint rmax(int v[], int n) {\n    if (n == 1) return v[0];\n    int m = rmax(v, n - 1);\n    return v[n - 1] > m ? v[n - 1] : m;\n}\n\nint rmin(int v[], int n) {\n    if (n == 1) return v[0];\n    int m = rmin(v, n - 1);\n    return v[n - 1] < m ? v[n - 1] : m;\n}\n\nint countEven(int v[], int n) {\n    if (n == 0) return 0;\n    return (v[n - 1] % 2 == 0) + countEven(v, n - 1);\n}\n\nvoid printReverse(int v[], int n) {\n    if (n == 0) return;\n    printf(\" %d\", v[n - 1]);\n    printReverse(v, n - 1);\n}\n\nint pal(int v[], int lo, int hi) {\n    if (lo >= hi) return 1;\n    if (v[lo] != v[hi]) return 0;\n    return pal(v, lo + 1, hi - 1);\n}\n\nint main() {\n    int n, v[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) scanf(\"%d\", &v[i]);\n    int total = rsum(v, n), hi = rmax(v, n);\n    printf(\"Sum: %d\\nAverage: %.2f\\n\", total, (double)total / n);\n    printf(\"Max: %d\\nMin: %d\\n\", hi, rmin(v, n));\n    int best = -1, have = 0;\n    for (int i = 0; i < n; i++)\n        if (v[i] < hi && (!have || v[i] > best)) { best = v[i]; have = 1; }\n    if (have) printf(\"Second largest: %d\\n\", best);\n    else printf(\"Second largest: none\\n\");\n    int ev = countEven(v, n);\n    printf(\"Even: %d Odd: %d\\n\", ev, n - ev);\n    printf(\"Reversed:\");\n    printReverse(v, n);\n    printf(\"\\nPalindrome: %s\\n\", pal(v, 0, n - 1) ? \"Yes\" : \"No\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s5",
+    "name": "Manish Yadav",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\nint main(void)\n\n{\n    int list1[100];\n    int head, k, e1, alpha, m, second, key, low, u, f;\n    scanf(\"%d\", &head);\n    for (int p = 0; p<0; p++)\n    { }\n    for (k=0; (head>k); k++)\n    {\n        scanf(\"%d\", &list1[k]);\n    }\n    e1=0; low=0; u=0;\n    alpha=list1[0]; m=list1[0];\n    for (k=0; head>k; k++)\n\n    {\n\n        e1+=list1[k];\n        if (list1[k]>alpha) alpha=list1[k];\n        if (m>list1[k]) m=list1[k];\n\n        if (list1[k]%2==0) low=low+1; else u=(u+1);\n    }\n    key=0; second=0;\n    for (k=0; head>k; k++)\n    {\n        if (list1[k]<alpha)\n        {\n            if (key==0||second<list1[k])\n            { second=list1[k]; key=1; }\n\n        }\n    }\n    printf(\"Sum: %d\\n\", e1);\n    printf(\"Average: %.2f\\n\", e1/(double)head);\n    printf(\"Max: %d\\n\", alpha);\n    printf(\"Min: %d\\n\", m);\n    if (key==1) printf(\"Second largest: %d\\n\", second);\n    else printf(\"Second largest: none\\n\");\n\n    for (int z = 0; (z<0); z++)\n    { }\n    printf(\"Even: %d Odd: %d\\n\", low, u);\n    printf(\"Reversed:\");\n    k=head-1;\n\n    while (0<=k)\n\n    { printf(\" %d\", list1[k]); k--; }\n    printf(\"\\n\");\n    k=0;\n    // get the length\n    f=1;\n    while (k<head/2)\n    { if (list1[k]!=list1[head-1-k]) f=0; k=k+1; }\n\n    if (f) printf(\"Palindrome: Yes\\n\"); else printf(\"Palindrome: No\\n\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s6",
+    "name": "Neha Bhatt",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\nvoid bubbleSort(int x[], int len) {\n    int i, j, t;\n    for (i = 0; i < len - 1; i++) {\n        for (j = 0; j < len - 1 - i; j++) {\n            if (x[j] > x[j + 1]) {\n                t = x[j];\n                x[j] = x[j + 1];\n                x[j + 1] = t;\n            }\n        }\n    }\n}\n\nint main() {\n    int num, original[100], sorted[100];\n    int i, s = 0, e = 0, palin = 1;\n    scanf(\"%d\", &num);\n    for (i = 0; i < num; i++) {\n        scanf(\"%d\", &original[i]);\n        sorted[i] = original[i];\n        s = s + original[i];\n        if (original[i] % 2 == 0) e++;\n    }\n    bubbleSort(sorted, num);\n    printf(\"Sum: %d\\n\", s);\n    printf(\"Average: %.2f\\n\", (float)s / num);\n    printf(\"Max: %d\\n\", sorted[num - 1]);\n    printf(\"Min: %d\\n\", sorted[0]);\n    int k = num - 2;\n    while (k >= 0 && sorted[k] == sorted[num - 1]) k--;\n    if (k >= 0) printf(\"Second largest: %d\\n\", sorted[k]);\n    else printf(\"Second largest: none\\n\");\n    printf(\"Even: %d Odd: %d\\n\", e, num - e);\n    printf(\"Reversed:\");\n    for (i = num - 1; i >= 0; i--) printf(\" %d\", original[i]);\n    printf(\"\\n\");\n    for (i = 0; i < num; i++) {\n        if (original[i] != original[num - i - 1]) {\n            palin = 0;\n            break;\n        }\n    }\n    printf(\"Palindrome: %s\\n\", palin == 1 ? \"Yes\" : \"No\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s7",
+    "name": "Riya Sen",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\nint main(void)\n{\n    int n, i, total, big, small, second, have2, ev, od, ok;\n    int arr[100];\n    scanf(\"%d\", &n);\n    i = 0;\n    while (i < n)\n    {\n        scanf(\"%d\", &arr[i]);\n        i = i + 1;\n    }\n    total = 0; ev = 0; od = 0;\n    big = arr[0]; small = arr[0];\n    i = 0;\n    while (i < n)\n    {\n        total = total + arr[i];\n        if (arr[i] > big) big = arr[i];\n        if (arr[i] < small) small = arr[i];\n        if (arr[i] % 2 == 0) ev = ev + 1; else od = od + 1;\n        i = i + 1;\n    }\n    have2 = 0; second = 0;\n    i = 0;\n    while (i < n)\n    {\n        if (arr[i] < big)\n        {\n            if (have2 == 0 || arr[i] > second) { second = arr[i]; have2 = 1; }\n        }\n        i = i + 1;\n    }\n    printf(\"Sum: %d\\n\", total);\n    printf(\"Average: %.2f\\n\", total / (double)n);\n    printf(\"Max: %d\\n\", big);\n    printf(\"Min: %d\\n\", small);\n    if (have2 == 1) printf(\"Second largest: %d\\n\", second);\n    else printf(\"Second largest: none\\n\");\n    printf(\"Even: %d Odd: %d\\n\", ev, od);\n    printf(\"Reversed:\");\n    i = n - 1;\n    while (i >= 0) { printf(\" %d\", arr[i]); i = i - 1; }\n    printf(\"\\n\");\n    ok = 1;\n    i = 0;\n    while (i < n / 2) { if (arr[i] != arr[n - 1 - i]) ok = 0; i = i + 1; }\n    if (ok) printf(\"Palindrome: Yes\\n\"); else printf(\"Palindrome: No\\n\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s8",
+    "name": "Yash Malhotra",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\n\n/* Lab 2 - array statistics */\n\nint sum(int a[], int n) {\n    int s = 0;\n    for (int i = 0; i < n; i++)\n        s += a[i];\n    return s;\n}\n\nint maximum(int a[], int n) {\n    int m = a[0];\n    for (int i = 1; i < n; i++)\n        if (a[i] > m) m = a[i];\n    return m;\n}\n\nint minimum(int a[], int n) {\n    int m = a[0];\n    for (int i = 1; i < n; i++)\n        if (a[i] < m) m = a[i];\n    return m;\n}\n\nint secondLargest(int a[], int n, int *found) {\n    int max = maximum(a, n), second = 0;\n    *found = 0;\n    for (int i = 0; i < n; i++) {\n        if (a[i] != max && (!*found || a[i] > second)) {\n            second = a[i];\n            *found = 1;\n        }\n    }\n    return second;\n}\n\nint isPalindrome(int a[], int n) {\n    for (int i = 0; i < n / 2; i++)\n        if (a[i] != a[n - 1 - i]) return 0;\n    return 1;\n}\n\nint main() {\n    int n, a[100], even = 0, odd = 0, found;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &a[i]);\n        if (a[i] % 2 == 0) even++;\n        else odd++;\n    }\n    int s = sum(a, n);\n    printf(\"Sum: %d\\n\", s);\n    printf(\"Average: %.2f\\n\", (float)s / n);\n    printf(\"Max: %d\\n\", maximum(a, n));\n    printf(\"Min: %d\\n\", minimum(a, n));\n    int sec = secondLargest(a, n, &found);\n    if (found) printf(\"Second largest: %d\\n\", sec);\n    else printf(\"Second largest: none\\n\");\n    printf(\"Even: %d Odd: %d\\n\", even, odd);\n    printf(\"Reversed:\");\n    for (int i = n - 1; i >= 0; i--) printf(\" %d\", a[i]);\n    printf(\"\\n\");\n    printf(\"Palindrome: %s\\n\", isPalindrome(a, n) ? \"Yes\" : \"No\");\n    return 0;\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "s9",
+    "name": "Zoya Mirza",
+    "files": [
+     {
+      "path": "lab2.c",
+      "text": "#include <stdio.h>\nvoid newBubbleSort(int x2[], int len);\nint main() {\n    int num;\n    int original2[100];\n    int sorted[100];\n    int i2;\n    int newS = 0;\n    int newE = 0;\n    int palin = 1;\n    // end of loop\n    scanf(\"%d\", &num);\n    for (i2 = 0; i2 < num; i2++) {\n        scanf(\"%d\", &original2[i2]);\n        // logic for the problem\n        sorted[i2] = original2[i2];\n        newS = newS + original2[i2];\n        if (original2[i2] % 2 == 0) newE++;\n    }\n    newBubbleSort(sorted, num);\n    printf(\"Sum: %d\\n\", newS);\n    printf(\"Average: %.2f\\n\", (float)newS / num);\n    printf(\"Max: %d\\n\", sorted[num - 1]);\n    printf(\"Min: %d\\n\", sorted[0]);\n    int k2;\n    k2 = num - 2;\n    while (k2 >= 0 && sorted[k2] == sorted[num - 1]) k2--;\n    if (0 <= k2) printf(\"Second largest: %d\\n\", sorted[k2]);\n    else printf(\"Second largest: none\\n\");\n    printf(\"Even: %d Odd: %d\\n\", newE, num - newE);\n    printf(\"Reversed:\");\n    for (i2 = num - 1; i2 >= 0; i2--) printf(\" %d\", original2[i2]);\n    printf(\"\\n\");\n    for (i2 = 0; i2 < num; i2++) {\n        if (original2[i2] != original2[num - i2 - 1]) {\n            palin = 0;\n            break;\n        }\n    }\n    // main logic\n    printf(\"Palindrome: %s\\n\", palin == 1 ? \"Yes\" : \"No\");\n    return 0;\n}\nvoid newBubbleSort(int x2[], int len) {\n    int i2;\n    int newJ;\n    int newT;\n    for (i2 = 0; i2 < len - 1; i2++) {\n        for (newJ = 0; newJ < len - 1 - i2; newJ++) {\n            if (x2[newJ + 1] < x2[newJ]) {\n                newT = x2[newJ];\n                x2[newJ] = x2[newJ + 1];\n                x2[newJ + 1] = newT;\n            }\n        }\n    }\n}"
+     }
+    ]
+   }
+  ],
+  "truth": [
+   [
+    "Farhan Ali",
+    "Manish Yadav",
+    "Riya Sen"
+   ],
+   [
+    "Neha Bhatt",
+    "Zoya Mirza"
+   ]
+  ],
+  "note": "Example data: fictional students. Three submissions are disguised copies."
+ }
+}

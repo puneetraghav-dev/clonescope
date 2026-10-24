@@ -1,0 +1,141 @@
+{
+ "vocab_hash": "ec226283",
+ "epoch": 12,
+ "val": {
+  "recall@1": 0.9994646680942184,
+  "mrr": 0.9997323340471093,
+  "auc_hard": 0.9999626164870264,
+  "auc_random": 0.9999972495478525,
+  "n_pos": 3736,
+  "n_hard": 179,
+  "pos_mean": 0.9795061609123452,
+  "hard_mean": 0.27349851208650533
+ },
+ "train_args": {
+  "epochs": 20,
+  "batch": 128,
+  "lr": 0.002,
+  "tau": 0.07,
+  "max_len": 512,
+  "seed": 42,
+  "aug": 0.6,
+  "short": 0.3,
+  "out": "model/encoder",
+  "threads": 2
+ },
+ "config": {
+  "vocab_size": 677,
+  "emb": 64,
+  "channels": 96,
+  "kernel": 3,
+  "dilations": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "out_dim": 128
+ },
+ "tensors": [
+  {
+   "name": "emb.weight",
+   "shape": [
+    677,
+    64
+   ],
+   "offset": 0,
+   "size": 43328
+  },
+  {
+   "name": "convs.0.weight",
+   "shape": [
+    96,
+    64,
+    3
+   ],
+   "offset": 43328,
+   "size": 18432
+  },
+  {
+   "name": "convs.0.bias",
+   "shape": [
+    96
+   ],
+   "offset": 61760,
+   "size": 96
+  },
+  {
+   "name": "convs.1.weight",
+   "shape": [
+    96,
+    96,
+    3
+   ],
+   "offset": 61856,
+   "size": 27648
+  },
+  {
+   "name": "convs.1.bias",
+   "shape": [
+    96
+   ],
+   "offset": 89504,
+   "size": 96
+  },
+  {
+   "name": "convs.2.weight",
+   "shape": [
+    96,
+    96,
+    3
+   ],
+   "offset": 89600,
+   "size": 27648
+  },
+  {
+   "name": "convs.2.bias",
+   "shape": [
+    96
+   ],
+   "offset": 117248,
+   "size": 96
+  },
+  {
+   "name": "convs.3.weight",
+   "shape": [
+    96,
+    96,
+    3
+   ],
+   "offset": 117344,
+   "size": 27648
+  },
+  {
+   "name": "convs.3.bias",
+   "shape": [
+    96
+   ],
+   "offset": 144992,
+   "size": 96
+  },
+  {
+   "name": "proj.weight",
+   "shape": [
+    128,
+    192
+   ],
+   "offset": 145088,
+   "size": 24576
+  },
+  {
+   "name": "proj.bias",
+   "shape": [
+    128
+   ],
+   "offset": 169664,
+   "size": 128
+  }
+ ],
+ "total_floats": 169792,
+ "dtype": "float32"
+}

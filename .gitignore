@@ -1,0 +1,13 @@
+node_modules/
+data/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+*.log
+# regenerable evaluation intermediates (see training/extract_features.mjs)
+results/features_*.jsonl
+results/*_ids.json
+site/
+# claude.ai variant of the app page (same as dist/clonescope.html without the document skeleton)
+dist/artifact.html

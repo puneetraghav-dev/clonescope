@@ -1,0 +1,11 @@
+# Training / evaluation pipeline (the web app itself needs nothing - it runs in the browser)
+torch>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
+tree-sitter>=0.23
+tree-sitter-python>=0.23
+tree-sitter-java>=0.23
+tree-sitter-c>=0.23
+tree-sitter-cpp>=0.23
+pytest>=8

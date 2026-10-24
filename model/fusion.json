@@ -1,0 +1,92 @@
+{
+ "full": {
+  "features": [
+   "neural",
+   "wJaccard",
+   "wContainment",
+   "gstAvg",
+   "gstMax",
+   "lenRatio",
+   "litShare"
+  ],
+  "mean": [
+   0.730365,
+   0.593755,
+   0.66145,
+   0.676003,
+   0.695356,
+   0.289902,
+   0.460503
+  ],
+  "std": [
+   0.40444,
+   0.406814,
+   0.40294,
+   0.41649,
+   0.406632,
+   0.548919,
+   0.403968
+  ],
+  "weights": [
+   3.339065,
+   0.168643,
+   1.111169,
+   1.933479,
+   2.283244,
+   -0.758053,
+   0.28005
+  ],
+  "bias": 2.771653,
+  "threshold": 0.597,
+  "val": {
+   "auc": 1.0,
+   "auc_same_task": 1.0,
+   "best_f1_same_task": 0.99953,
+   "n": 10651
+  }
+ },
+ "classic": {
+  "features": [
+   "wJaccard",
+   "wContainment",
+   "gstAvg",
+   "gstMax",
+   "lenRatio",
+   "litShare"
+  ],
+  "mean": [
+   0.593755,
+   0.66145,
+   0.676003,
+   0.695356,
+   0.289902,
+   0.460503
+  ],
+  "std": [
+   0.406814,
+   0.40294,
+   0.41649,
+   0.406632,
+   0.548919,
+   0.403968
+  ],
+  "weights": [
+   -0.015596,
+   1.440252,
+   2.935535,
+   3.394364,
+   -1.235302,
+   0.668011
+  ],
+  "bias": 3.980556,
+  "threshold": 0.667,
+  "val": {
+   "auc": 1.0,
+   "auc_same_task": 0.99996,
+   "best_f1_same_task": 0.99913,
+   "n": 10651
+  }
+ },
+ "threshold": 0.597,
+ "note": "Logistic regression on standardized features; fitted on synthetic validation pairs."
+}
